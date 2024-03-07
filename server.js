@@ -4,7 +4,8 @@
 // The server listens on port 3000 and logs a message to the console when it starts.
 
 // 1. imports the required modules and creates an instance of the Express application
-import express from 'express';
+import express, { Router } from 'express';
+import serverless from "serverless-http";
 import cheerio from 'cheerio';
 import axios from 'axios';
 import cors from 'cors';
@@ -13,11 +14,14 @@ const app = express();
 const port = process.env.PORT || 3001;
 app.use(cors());
 // 2. define the routes and request handlers for the server
-app.get('/', (req, res) => {
+
+const router = Router();
+
+router.get('/', (req, res) => {
   res.send('Hello World');
 });
 
-app.get('/fetchLetterBoxedSides', async (req, res) => {
+router.get('/fetchLetterBoxedSides', async (req, res) => {
   console.log('Fetching Letter Boxed sides...');
   try {
     const response = await axios.get(
@@ -49,7 +53,11 @@ app.get('/fetchLetterBoxedSides', async (req, res) => {
   }
 });
 
+app.use('/api/', router);
+
 // 3. start the server
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
+export const handler = serverless(app);
