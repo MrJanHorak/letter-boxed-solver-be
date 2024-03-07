@@ -53,11 +53,11 @@ router.get('/fetchLetterBoxedSides', async (req, res) => {
   }
 });
 
-app.use('/api/', router);
+app.use(`/.netlify/functions/api`, router);
 
 // 3. start the server
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
-
+// app.listen(port, () => {
+//   console.log(`Server is running on port ${port}`);
+// });
+export default app;
 export const handler = serverless(app);
