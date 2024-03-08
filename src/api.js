@@ -1,15 +1,16 @@
-// 1. imports the required modules and creates an instance of the Express application
-import express, { Router } from 'express';
+// 1. imports the required modules
+import { Router } from 'express';
 import serverless from "serverless-http";
 import cheerio from 'cheerio';
 import axios from 'axios';
 import cors from 'cors';
 
+const express = require('express');
 const app = express();
 const port = process.env.PORT || 3001;
 app.use(cors());
-// 2. define the routes and request handlers for the server
 
+// 2. define the routes and request handlers for the server
 const router = Router();
 
 router.get('/', (req, res) => {
@@ -50,4 +51,5 @@ router.get('/fetchLetterBoxedSides', async (req, res) => {
 
 app.use(`/.netlify/functions/api`, router);
 
-export const handler = serverless(app);
+// 3. export the handler function
+module.exports.handler = serverless(app);
