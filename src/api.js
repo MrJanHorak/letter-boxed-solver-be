@@ -1,8 +1,3 @@
-// Purpose: Define a simple Express server that fetches the sides for the Letter Boxed puzzle from the New York Times website.
-// The server uses the cheerio and axios libraries to fetch the HTML content of the puzzle page and extract the sides data from the embedded JavaScript.
-// The extracted sides data is then formatted and returned as the response to a GET request to the /fetchLetterBoxedSides route.
-// The server listens on port 3000 and logs a message to the console when it starts.
-
 // 1. imports the required modules and creates an instance of the Express application
 import express, { Router } from 'express';
 import serverless from "serverless-http";
@@ -55,9 +50,4 @@ router.get('/fetchLetterBoxedSides', async (req, res) => {
 
 app.use(`/.netlify/functions/api`, router);
 
-// 3. start the server
-// app.listen(port, () => {
-//   console.log(`Server is running on port ${port}`);
-// });
-export default app;
 export const handler = serverless(app);
