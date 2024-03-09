@@ -1,14 +1,13 @@
 // 1. imports the required modules
-import express from 'express';
 import { Router } from 'express';
-import serverless from "serverless-http";
+// import serverless from "serverless-http";
 import cheerio from 'cheerio';
 import axios from 'axios';
 import cors from 'cors';
 
+const express = require('express');
 const app = express();
 const port = process.env.PORT || 3001;
-app.use(cors());
 
 // 2. define the routes and request handlers for the server
 const router = Router();
@@ -23,10 +22,10 @@ router.get('/fetchLetterBoxedSides', async (req, res) => {
     const response = await axios.get(
       'https://www.nytimes.com/puzzles/letter-boxed'
     );
-    const $ = cheerio.load(response.data);
+    const $ = cheerio(response.data);
     let sidesData = '';
 
-    $('script').each((i, script) => {
+    $('script').each((_, script) => {
       const scriptContent = $(script).html();
       if (scriptContent.startsWith('window.gameData')) {
         const gameDataText = scriptContent;
@@ -49,7 +48,7 @@ router.get('/fetchLetterBoxedSides', async (req, res) => {
   }
 });
 
-app.use(`/.netlify/functions/api`, router);
+// app.use(`/.netlify/functions/api`, router);
 
 // 3. export the handler function
-export const handler = serverless(app);
+module.exports.handler = serverless(app);
