@@ -46,7 +46,7 @@ const threeWordSolutions = (lettersArraySet, wordList) => {
   }
 
   function findSolutions(firstWord, secondWord, thirdWord) {
-    // if (solutions.length >= 75) return;
+    if (solutions.length >= 2500) return;
 
     if (
       firstWord.word.slice(-1) === secondWord.word.charAt(0) &&
